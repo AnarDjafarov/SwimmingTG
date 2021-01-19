@@ -1,0 +1,1074 @@
+/*--------------------------------------------------------------
+# General
+--------------------------------------------------------------*/
+body {
+    font-family: "Open Sans", sans-serif;
+    color: #272829;
+    background-color: black;
+}
+a {
+    color: #149ddd;
+}
+
+a:hover {
+    color: #37b3ed;
+    text-decoration: none;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+    font-family: "Raleway", sans-serif;
+}
+
+/*--------------------------------------------------------------
+# Layouts
+--------------------------------------------------------------*/
+#aside-nav{
+	display: block;
+	position: fixed;
+	width: 11%;
+	height: 100%;
+	top:0;
+	background-color:white;
+}
+
+#aside-nav {
+    transition: all ease-in-out 0.5s;
+    z-index: 9997;
+    padding: 0 15px;
+    overflow-y: auto;
+}
+#aside-nav {
+	border-right: 0.5px solid gray;
+	width: 16%;
+	font-weight: bold;
+}
+
+main{
+	display: block;
+    position: relative;
+	left: 16%;
+	width: 84%;
+	height: 100%;
+    background-color: black;
+}
+
+/*--------------------------------------------------------------
+# Empty Left + right
+--------------------------------------------------------------*/
+#aside-nav {
+	left: 0;
+}
+
+/*--------------------------------------------------------------
+# Nav-Bar Left
+--------------------------------------------------------------*/
+
+#aside-nav{
+    background-color: #093B68;
+
+}
+#aside-nav .search-links img {
+    margin: 15px 15px;
+    display: block;
+    width: 80%;
+    height: 80px;
+}
+    
+#aside-nav .search-links .social-links a {
+    font-size: 18px;
+    display: inline-block;
+    background: #212431;
+    line-height: 1;
+    padding: 8px 0;
+    margin-right: 4px;
+    border-radius: 50%;
+    text-align: center;
+    width: 36px;
+    height: 36px;
+    transition: 0.3s;
+}
+
+
+#aside-nav .search-links .social-links a:hover {
+    background: #149ddd;
+    text-decoration: none;
+}
+
+#main {
+    margin-left: 250px;
+    background-color: #333;
+    display: block;
+    height: 100vh;
+}
+
+@media (max-width: 1199px) {
+    #aside-nav {
+        left: -300px;
+    }
+
+    #main {
+        margin-left: 0;
+    }
+}
+
+#mini-profile {
+	margin-top:15%;
+    height: 50px;
+    width: 97%;
+    display: block;
+    border-radius: 30px;
+    bottom: 15px;
+    padding-top: 10px;
+    
+}
+    #mini-profile img {
+        height: 30px;
+        width: 30px;
+        border-radius: 20px;
+        display: inline-block;
+        float: left;
+        margin-left: 10px;
+    }
+    #mini-profile h4 {
+        font-size: 16px;
+        text-align: center;
+        display: inline;
+        margin-left: 10px;
+        color:burlywood;
+    }
+    #mini-profile i {
+        font-size: 25px;
+        display: block;
+        float: right;
+        margin-right: 10px;
+    }
+
+
+.nav-footer {
+	display:block;
+    color: #777;
+    font-size: 13px;
+	width:100%;
+	margin-top: 5%;
+}
+.nav-footer ul{
+    margin-left: 0;
+    display:inline-block;
+}
+    .nav-footer ul li{
+        display: inline-block;
+        list-style:none;
+    }
+        .nav-footer ul li a {
+            color: #777;
+            text-decoration: none;
+        }
+        .nav-footer ul li a:hover{
+            text-decoration:none;
+			color:#149ddd;
+			transition: 0.4s;
+        }
+
+
+
+
+/*--------------------------------------------------------------
+# Navigation Menu
+--------------------------------------------------------------*/
+.nav-menu {
+    padding-top: 30px;
+}
+
+.nav-menu * {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+}
+
+.nav-menu > ul > li {
+    position: relative;
+    white-space: nowrap;
+}
+
+.nav-menu a {
+    display: flex;
+    align-items: center;
+    color: #DBEFFF;
+    padding: 12px 15px;
+    margin-bottom: 8px;
+    transition: 0.3s;
+    font-size: 15px;
+}
+
+.nav-menu a i {
+    font-size: 24px;
+    padding-right: 8px;
+    color: #DBEFFF;
+}
+
+.nav-menu a:hover,
+.nav-menu .active > a,
+.nav-menu li:hover > a {
+    text-decoration: none;
+    color: #D27E7E;
+}
+
+.nav-menu a,
+.nav-menu .active > a,
+.nav-menu li > a {
+    text-decoration: none;
+}
+
+.nav-menu a:hover i,
+.nav-menu .active > a i,
+.nav-menu li:hover > a i {
+    color: #D27E7E;
+}
+
+/* Mobile Navigation */
+.mobile-nav-toggle {
+    position: fixed;
+    right: 15px;
+    top: 15px;
+    z-index: 9998;
+    border: 0;
+    background: none;
+    font-size: 24px;
+    transition: all 0.4s;
+    outline: none !important;
+    line-height: 1;
+    cursor: pointer;
+    text-align: right;
+}
+
+.mobile-nav-toggle i {
+    color: #D27E7E;
+}
+
+.mobile-nav-active {
+    overflow: hidden;
+}
+
+.mobile-nav-active #aside-nav {
+    left: 0;
+}
+
+.mobile-nav-active .mobile-nav-toggle i {
+    color: #fff;
+}
+
+
+/*--------------------------------------------------------------
+# Main Center
+--------------------------------------------------------------*/
+main  header{
+	display: inline-block;
+	border-bottom: 0.5px solid gray;
+	background-color: black;
+	width:100%;
+	height: 7.5%;
+    color: #1da1f2;
+	padding: 1%;
+}
+
+main header h1{
+	float: left;
+	left: 0;
+	display:inline-block;
+	font-size: 20px;
+	font-weight: bold;
+}
+main header form{
+    float: right;
+	right: 0;
+    display: inline-flex;
+}
+header form .search-bar {
+    color: rgba(110,127,141,1);
+}
+header form .search-button {
+    
+}
+
+ 
+#our-recomandation{
+    display: block;
+    width: 100%;
+    height: 650px;
+    background-color: antiquewhite;
+    border-bottom: 1px solid gray;
+}
+
+#our-recomandation img{
+    width: 100%;
+    height: 100%;
+    flex-grow: 1;
+}
+
+ 
+ 
+/*--------------------------------------------------------------
+# Home page - Pid
+--------------------------------------------------------------*/
+
+.img-popular-big:hover{
+    cursor: pointer;
+}
+
+ #pid,  #pid2{
+    background-color: black;
+	margin-top: 0%;
+	height:100%;
+	padding:1%;
+ }
+ 
+
+ /*--------------------------------------------------------------
+# List - Movies
+--------------------------------------------------------------*/
+.movies-list{
+    display: block;
+	width: 100%;
+    height: 180px;
+    padding-top: 1%;
+}
+.movies-list h4{
+    font-weight: bold;
+    margin-left: 1%;
+    color: #D27E7E;
+}
+.movies-list article{
+	display: inline-block;
+	margin-left: 0.5%;
+    margin-top: 1%;
+	border: 1px solid gray;
+ }
+.movies-list article:hover{
+     cursor:pointer;
+}
+.movies-list article img{
+	 display: block;
+}
+
+
+ /*--------------------------------------------------------------
+# Movie - Page
+--------------------------------------------------------------*/
+
+#movie{
+    display: block;
+	/*position: relative;*/
+    width: 80%;
+    margin-left: 5%;
+    border-bottom: 1px solid gray;
+    padding: 1%;
+    height: 40%;
+    font-size: 16px;
+}
+#movie img{
+    display: block;
+    height: 35%;
+    width: 100%;
+    border: 1px solid gray;
+}
+#movie-details{
+    margin-top:2%;
+    background-color: black;
+    color:white;
+}
+#movie-details .movie-right{
+    display: inline-block;
+	position: absolute;
+    width: 50%;
+} 
+
+#movie-details .movie-left{
+    display: inline-block;
+	position: relative;
+    margin-left:0%;
+    width: 49%;
+} 
+#movie-details ul li{
+   list-style: none;
+}
+#movie-details label{
+   font-weight: bold;
+   color: #666;
+   font-size: 18px;
+}
+#movie-details p{
+    display: block;
+    /*position: relative;*/
+    width: 100%;
+    height: 5%;
+    margin-left: 4%;
+}
+#movie-details p label{
+    color: #D27E7E;
+}
+
+
+
+
+/*--------------------------------------------------------------
+# Movie - Comments
+--------------------------------------------------------------*/
+
+ #pid .pid-comment ,  #pid2 .pid-comment{
+	 display: block;
+	 margin-top: 1%;
+     margin-left: 5%;
+	 border: 0.5px solid gray;
+	 background-color:aliceblue;
+     width: 80%;
+ }
+ 
+ .pid-comment .article-body{
+	width: 80%;
+	display: flex;
+	height: 75%;
+ }
+ 
+ .pid-comment .article-body img{
+	height: 50px;
+	width: 50px;
+	border-radius: 20px;
+	display: inline-block;
+	float: left;
+	margin-left: 1%;
+	margin-top: 2%;
+ }
+ .pid-comment .article-body label{
+	display: inline-block;
+	margin-left: 1%;
+	margin-top: 2%;
+    font-size: 18px;
+     font-weight: bold;
+     color:#333;
+ }
+ .pid-comment .article-body p{
+	height: 70%;
+	width: 87%;
+	display: inline-block;
+	font-size:14px;
+	margin-left: 2%;
+	margin-top: 2%;
+	border: none;
+ }
+.pid-comment .article-footer {
+	width: 93%;
+	height: 25%;
+	display:flex;
+ }
+  .article-footer ul{
+	display:block;
+	width:100%;
+  }
+  
+  .article-footer ul li{
+	display:inline-block;
+	list-style:none;
+	margin-top:0.5%;
+  }
+  .article-footer ul li:hover{
+	color: #1da1f2;
+	cursor: pointer;
+  }
+  
+ .icon-left{
+	float: left;
+	margin-left: 2%;
+ }
+  .icon-right{
+	float: right;
+	margin-right: 4%;
+ }
+ 
+ .article-footer ul li i{
+	display:inline-block;
+ }
+
+
+/*--------------------------------------------------------------
+# Recomandations - Pid
+--------------------------------------------------------------*/
+#recommend-pid {
+    display: block;
+    width:86%;
+    margin-left: 5%;
+}
+#recommend-pid article{
+    width:100%;
+    display: flex;
+    border: 1px solid gray;
+    margin-bottom: 0.5%;
+}
+
+#recommend-pid article aside {
+    width: 65%;
+    left:0%;
+    border-right: 1px solid gray;
+  
+}
+#recommend-pid article aside img {
+    width: 100%;
+    height: 400px;
+}
+#recommend-pid article nav {
+    padding-top: 2%;
+    width:35%;
+    background-color: beige;
+    right: 0%;
+    padding-right: 1%;
+}
+#recommend-pid article nav ul {
+    list-style: none;
+}
+
+#recommend-pid article nav ul li label{
+    display: inline-block;
+	margin-top: 2%;
+    font-size: 18px;
+    font-weight: bold;
+    color:#666;
+}
+
+#recommend-pid article nav ul li span{
+    list-style: none;
+    font-size: 15px;
+}
+
+#recommend-pid article nav ul li .movie-name{
+    color: #D27E7E;
+    font-weight: bold;
+    font-size: 18px;
+}
+
+
+
+/*--------------------------------------------------------------
+# New Excercise
+--------------------------------------------------------------*/
+#firstDivide{
+    display: block;
+    width: 80%;
+    margin-left: 10%;
+    background-color:darkcyan;
+}
+
+
+/*--------------------------------------------------------------
+# Excercise
+--------------------------------------------------------------*/
+.exer{
+    display: flex;
+    width:70%;
+    margin-top: 2%;
+    margin-left: 15%;
+    background-color: whitesmoke;
+    border: 1px solid gray;
+}
+
+.exer:hover{
+    background-color:#093B68;
+    transition: 0.4s;
+    color:white;
+    cursor: pointer;
+}
+.exer:hover label{
+    color:antiquewhite;
+}
+.exer .left-excer{
+    display: block;
+    width: 25%;
+    display: inline-block;
+}
+.exer .midle-excer{
+    display: block;
+    width: 50%;
+    display: inline-block;
+}
+.exer .right-excer{
+    display: block;
+    width: 25%;
+    display: inline-block;
+}
+.exer aside label{
+    margin-left: 3%;
+    font-weight: bold;
+    color:#444;
+}
+.exer .right-excer img{
+    margin-right: 15%;
+}
+.head-excer{
+    font-size: 20px;
+    color:#D27E7E;
+}
+
+/*--------------------------------------------------------------
+# Form Excersice
+--------------------------------------------------------------*/
+#form-exercise{
+    display: block;
+    width: 80%;
+    margin-Top: 2%;
+    margin-left: 10%;
+    background-color: beige;
+    background:url(../img/background-7.png);
+    margin-bottom: 2%;
+    border-radius: 20px;
+    height: 500px;
+}
+
+.form-exc-required
+{
+    padding: 5% 0%;
+    display: flex;
+    width: 100%;
+}
+.form-exc-left
+{
+    padding: 0% 4%;
+    display: inline-block;
+    width: 50%;
+}
+.form-exc-right
+{
+    padding: 0% 4%;
+    display: inline-block;
+    width: 50%;
+}
+.form-exc-extra{
+    display: flex;
+    width: 100%;
+}
+.form-exc-icons{
+    display: block;
+    width: 70%;
+    padding: 1%;
+    margin-left: 15%;
+    color: white;
+}
+.form-exc-buttons{
+    display: block;
+    width: 30%;
+    margin-left: 35%;
+    margin-bottom: 5%;
+}
+.form-exc-buttons button{
+    margin-left: 15%;
+    width: 30%;
+    font-weight: bold;
+}
+
+.form-exc-checkbox{
+    display: block;
+    width: 65%;
+    padding: 1%;
+    margin-left: 15%;
+    color: white;
+}
+.form-header{
+    color:bisque;
+    font-size: 16px;
+    font-weight: bold;
+}
+
+
+
+/*--------------------------------------------------------------
+# Train - show
+--------------------------------------------------------------*/
+#Train{
+    color: black;
+}
+#Train .train-body{
+    margin-top: -1.8%;
+    display: block;
+}
+#Train .train-body article{
+    margin-top: 0px;
+	margin-bottom: 0;
+    border-top: 0px;
+    border-bottom: 0px;
+    background-color: aliceblue;
+    width: 70%;
+    margin-left: 15%;
+    border-left: 1px solid gray;
+    border-right: 1px solid gray;
+    height: 130px;
+}
+#Train .train-body article:hover {
+	color:white;
+	transition: 0.4s;
+    color:#4682B4;
+}
+
+#Train .train-body article:hover label{
+	color: #555;
+}
+.train-header{
+    display: block;
+    height: 8%;
+    width:70%;
+    margin-left: 15%;
+    border: 1px solid gray;
+    background-image: linear-gradient(darkslategrey, #87CEFA);
+}
+.train-footer h3{
+    text-align: center;
+    color: white;
+    font-weight: bold;
+}
+.train-header h3{
+    text-align: center;
+    color: white;
+    font-weight: bold;
+}
+.train-footer{
+    display: flex;
+    height: 8%;
+    width:70%;
+    margin-left: 15%;
+    border: 1px solid gray;
+    background-image: linear-gradient(#87CEFA, darkslategrey);
+}
+.train-footer label{
+    margin-top: 2%;
+    font-weight: bold;
+    color: #FFFACD;
+    font-size: 18px;
+}
+.train-footer span{
+    color:white;
+    font-size: 16px;
+    margin-top: 2.2%;
+    margin-left: 1%;
+}
+
+.train-footer .center-lebel{
+    margin-left: 25%;
+    margin-right: 1%;
+}
+.train-footer img{
+    margin-left: 25%;
+    height: 60px;
+    width: 100px;
+}
+.img-header{
+    margin-top: 4%;
+    display: block;
+    height: 20%;
+    width:70%;
+    margin-left: 15%;
+    border-left: 1px solid gray;
+    border-right: 1px solid gray;
+    border-top: 1px solid gray;
+}
+#Train .train-body article .plus{
+    display: none;
+}
+
+/*--------------------------------------------------------------
+# Train - Form
+--------------------------------------------------------------*/
+
+#train-form-template {
+}
+
+#train-form-template article{
+    margin-top: 0;
+	margin-bottom: 0;
+    border-top: 0px;
+    border-bottom: 0px;
+    background-color: aliceblue;
+    width: 70%;
+    margin-left: 15%;
+    border-left: 1px solid gray;
+    border-right: 1px solid gray;
+}
+
+.header-label{
+	margin-top: 1%;
+	margin-left: 1%;
+	font-size: 18px;
+	font-weight: bold;
+	color: #333;
+}
+.plus{
+	height:23%;
+	margin-left:1%;
+	margin-bottom:2%;
+
+}
+#train-form-template article .head-excer{
+    display: none;
+}
+#swimdown-article article, #race-article article, #mainset-article article, #worm-article article{
+	display:flex;
+	margin-left:10%;
+	width: 80%;
+	border-left: none;
+	border-right: none;
+	height:100px;
+	margin-bottom: 3%;
+}
+#swimdown-article article:hover , #race-article article:hover ,#mainset-article article:hover ,#worm-article article:hover{
+	color:white;
+	transition: 0.4s;
+    color:#4682B4;
+}
+
+#swimdown-article article:hover label, #race-article article:hover label, #mainset-article article:hover label, #worm-article article:hover label{
+	color: #555;
+}
+#pid-excer-by-step{
+	margin-top:2%;
+}
+.form-train-head{
+    display: block;
+    width: 70%;
+    margin-left: 15%;
+    background-color: aliceblue;
+}
+.form-train-head form .col-auto{
+    margin-top: 2%;
+    margin-left: 10%;
+}
+.form-train-head form .form-floating input{
+    height: 50px;
+}
+.form-train-head form .col-auto button{
+    margin-top: 1%;
+    height: 48px;
+}
+
+#train-form-template .train-footer .center-img-form{
+    margin-left: 43%;
+}
+
+
+
+/*--------------------------------------------------------------
+# Home Page 
+--------------------------------------------------------------*/
+video{
+    width: 80%;
+    margin-left: 10%;
+    height: auto;
+}
+.wrapper{
+    width: 80%;
+    margin-left: 10%;
+    background-color:black;
+    display: block;
+    
+}
+.wrapper .card-group .card{
+    display: block;
+    height: 500px;
+    border: 1px solid gray;
+}
+.wrapper .card-group .card:hover{
+    color: white;
+    cursor: pointer;
+}
+.wrapper .card-group .card:hover .card-body h5{
+    color: #D27E7E;
+}
+.wrapper .card-group .card img{
+    height: 60%;
+}
+.wrapper .card-group .card .card-body h5{
+    text-align: center;
+    font-weight: bold;
+}
+.text-muted{
+    color: #D27E7E;
+    text-align: center;
+}
+
+
+
+/*--------------------------------------------------------------
+# Profile Page 
+--------------------------------------------------------------*/
+#my-profile {
+    margin-top: 3%;
+    display: block;
+    width:80%;
+    margin-left: 10%;
+}
+#my-profile article{
+    width:100%;
+    display: flex;
+    border: 1px solid gray;
+    margin-bottom: 0.5%;
+}
+
+#my-profile article aside {
+    width: 50%;
+    left:0%;
+    border-right: 1px solid gray;
+  
+}
+#my-profile article aside img {
+    width: 100%;
+    height: 500px;
+}
+#my-profile article nav {
+    padding-top: 2%;
+    width:50%;
+    background-color: beige;
+    right: 0%;
+    padding-right: 1%;
+}
+#my-profile article nav ul {
+    list-style: none;
+}
+
+#my-profile article nav ul li label{
+    display: inline-block;
+	margin-top: 2%;
+    font-size: 18px;
+    font-weight: bold;
+    color:#666;
+}
+
+#my-profile article nav ul li span{
+    list-style: none;
+    font-size: 17px;
+}
+
+#my-profile article nav ul li .movie-name{
+    color: #D27E7E;
+    font-weight: bold;
+    font-size: 18px;
+}
+
+#my-profile article form{
+    display: block;
+    position: absolute;
+    margin-top: 20%;
+    margin-left: 42%;
+    width: 30%;
+}
+#my-profile article form .custom-file{
+    display: inline-block;
+    width: 60%;
+    margin-left: 5%;
+    
+}
+#my-profile article form #button-update-img{
+    display: inline-block;
+    width: 30%;
+    margin-top: 1%;
+    height: 36px;
+    margin-left: 2%;
+}
+
+/*===========*/
+#my-profile-list{
+    display: block;
+    width:80%;
+    margin-left: 10%;
+    margin-bottom: 1%;
+    margin-top: 1%;
+    border: 1px solid gray;
+    background-color: aliceblue;
+}
+#my-profile-list article{
+    display: block;
+    background-color:aliceblue;
+    height: 10%;
+    border-bottom: 1px solid gray;
+}
+#my-profile-list article section{
+    margin-left: 7%;
+    display: inline-block;
+    width: 16%;
+}
+#my-profile-list article img{
+    width: 40px;
+    height: 40px;
+}
+#my-profile-list article label{
+    color: #555;
+    font-weight: bold;
+    font-size: 17px;
+}
+#my-profile-list article:hover{
+    cursor: pointer;
+}
+
+
+/*--------------------------------------------------------------
+# Random Page 
+--------------------------------------------------------------*/
+#random-div{
+    margin-top: 17%;
+    display: block;
+    width: 60%;
+    margin-left: 20%;
+    background-color: aliceblue;
+    border: 1px solid gray;
+    border-radius: 40px;
+    position: relative;
+}
+
+#random-div .header-form-random{
+    margin-top: 2%;
+    width: 80%;
+    height: 60px;
+    margin-left: 10%;
+}
+#random-div .header-form-random h3{
+    margin-top: 1%;
+    text-align: center;
+    color: #D27E7E;
+}
+#random-div .body-form-random{
+    width: 80%;
+    margin-left: 10%;
+}
+#random-div .body-form-random .form-floating{
+    width: 90%;
+    margin-left: 4%;
+    margin-bottom: 2%;
+}
+#random-div .body-form-random .radio-random, #random-div .body-form-random .checkbox-random{
+    display: block;
+    height: 30%;
+    margin-bottom: 2%;
+}
+#random-div .body-form-random .radio-random .random-label, #random-div .body-form-random .checkbox-random .random-label{
+    color: #555;
+    font-size: 16px;
+    font-weight: bold;
+}
+
+#random-div .footer-form-random{
+    margin-top: 2%;
+    margin-bottom: 2%;
+    width: 80%;
+    margin-left: 10%;
+    padding-left: 25%;
+}
+.body-img{
+    margin-top: -0.5%;
+    display: flex;
+    position: absolute;
+    width: 100%;
+    height: 150%;
+    background:url(../img/background-2.jpg);
+}
+/*--------------------------------------------------------------
+# Extra
+--------------------------------------------------------------*/
+
