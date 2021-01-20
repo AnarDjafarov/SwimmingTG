@@ -5,7 +5,7 @@
     <meta charset="utf-8">
     <meta content="width=device-width, initial-scale=1.0" name="viewport">
 
-    <title> Smart Search </title>
+    <title> Train Show </title>
     <meta content="" name="descriptison">
     <meta content="" name="keywords">
     <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i,700,700i|Raleway:300,300i,400,400i,500,500i,600,600i,700,700i|Poppins:300,300i,400,400i,500,500i,600,600i,700,700i" rel="stylesheet">
@@ -14,7 +14,7 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/boxicons@latest/css/boxicons.min.css">
     <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
     <link href="css/hover.css" rel="stylesheet">
-
+    
     
 
 
@@ -56,9 +56,10 @@
     <main data-aos="fade-up">
         <header>
             <h1>Train Page</h1>
-            <button id="exportButton" onclick="Export2Doc('Train', 'workout');">Export</button>
         </header>
-        <div id="Train">
+         <button id="htmlToWord" class="btn btn-info"><box-icon type='solid' name='file-doc' class="boxIcon"></box-icon></button>
+        <button id="htmlToCanvas" class="btn btn-info"><box-icon type='solid' name='file-image' class="boxIcon"></box-icon></button>
+       <div id="Train">
        </div>
     </main>
     
@@ -68,9 +69,10 @@
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js" integrity="sha384-OgVRvuATP1z7JjHLkuOU7Xw704+h835Lr+6QL9UvYjZE3Ipu6Tp75j7Bh/kR0JKI" crossorigin="anonymous"></script>
     <script src="https://unpkg.com/boxicons@latest/dist/boxicons.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/venobox/1.9.0/venobox.js"></script>
-
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/0.5.0-beta4/html2canvas.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/canvasjs/1.7.0/canvasjs.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/canvas2image@1.0.5/canvas2image.js"></script>
     <!-- Template Main JS File -->
-    <script src=" https://cdnjs.cloudflare.com/ajax/libs/canvasjs/1.7.0/canvasjs.js"></script>
     <script src="js/clientServer.js"></script>
     <script> AOS.init();  </script>
      <script>

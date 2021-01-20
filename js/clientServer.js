@@ -2,48 +2,15 @@
 /*jslint browser: true*/
 /*eslint no-console: "error"*/
 
-$(document).ready(function(){
-
-    $("#but_upload").click(function(){
-
-        var fd = new FormData();
-        var files = $('#file')[0].files;
-        
-        // Check file selected or not
-        if(files.length > 0 ){
-           fd.append('file',files[0]);
-
-           $.ajax({
-              url: 'upload.php',
-              type: 'post',
-              data: fd,
-              contentType: false,
-              processData: false,
-              success: function(response){
-                 if(response != 0){
-                    $("#img").attr("src",response); 
-                    $(".preview img").show(); // Display image element
-                 }else{
-                    alert('file not uploaded');
-                 }
-              },
-           });
-        }else{
-           alert("Please select a file.");
-        }
-    });
-});
-
-
 function postLogin(){
-    const formData = {
+    let formData = {
             'user_name' : $('input[name=user_name]').val(),
             'password': $('input[name=password]').val()
         };
     
     
         $.ajax({
-            url: 'http://localhost:8080/api/authentication/login',
+            url: 'https://swimmingtg.herokuapp.com/api/authentication/login',
             type: 'POST', 
             data:formData,
             cache: false,
@@ -61,14 +28,25 @@ function postLogin(){
         })
 }
 function postRegister(){
-    let input2 = document.getElementById("customFile").value;
+    //let input2 = document.getElementById("customFile").value;
     let input1 = $('#customFile')[0].files;
-    console.log(input2);
-    console.log(input1);
+    let input3 = input1[0];
+
+    var fd = new FormData();
+    let name = $('input[name=user_name]').val();
+    let mail = $('input[name=email]').val();
+    let pass = $('input[name=password]').val();
+    let pass2 = $('input[name=password2]').val();
+    fd.append('user_name', name);
+    fd.append('email', mail);
+    fd.append('password', pass);
+    fd.append('password2', pass2);
+    fd.append('image', input3);
+        
+    console.log(input1[0]);
     var fd = new FormData();
     var files = $('#customFile')[0].files;
     fd.append('image',files[0]);
-
     
     const formData = {
         'user_name' : $('input[name=user_name]').val(),
@@ -77,12 +55,25 @@ function postRegister(){
         'password2': $('input[name=password2]').val(),
         'image': input1
     };
+    console.log(formData);
+    
+    /*
+      const formData = new FormData({
+        'user_name' : document.getElementById("user_name"),
+        'email': document.getElementById("email"),
+        'password':  document.getElementById("password"),
+        'password2': document.getElementById("password2"),
+        'image': input1[0]
+    });
+    */
+    
     $.ajax({
-        url: 'http://localhost:8080/api/authentication/signup',
+        url: 'https://swimmingtg.herokuapp.com/api/authentication/signup',
         type: 'POST', 
-        data:formData,
+        data:fd,
         cache: false,
         dataType : 'json',
+        enctype: 'multipart/form-data',
         success: function(user) {
             localStorage.setItem("User", formData.user_name);
             let id = user.profile._id;
@@ -101,7 +92,7 @@ async function Parseusername(){
         let image = localStorage.getItem("image");
         let urlImage = "";
         if(image == 'img/Unknown_person.jpg') urlImage = image;
-        else urlImage = 'http://localhost:8080/' + image;
+        else urlImage = 'https://swimmingtg.herokuapp.com/' + image;
         $('#mini-profile').empty();
         $('#mini-profile').append(
             '<img src="' + urlImage +'">'+
@@ -109,13 +100,12 @@ async function Parseusername(){
         );
     }, 500);
 ;}
-
 function imageShow(){
     id = localStorage.getItem("UserId");
     image = "img/Unknown_person.jpg"
     localStorage.setItem("image", image);
      $.ajax({
-        url: `http://localhost:8080/api/users/${id}`,
+        url: `https://swimmingtg.herokuapp.com/api/users/${id}`,
         type: 'GET',
         success: function(user) {
             let newImage = user.user.image;
@@ -129,11 +119,12 @@ function imageShow(){
         }   
     });           
 }
+
 //=========EXCER============
 function showExcercises(){
-    console.log(`http://localhost:8080/api/excercisies`);
+    console.log(`https://swimmingtg.herokuapp.com/api/excercisies`);
     $.ajax({
-        url: `http://localhost:8080/api/excercisies`,
+        url: `https://swimmingtg.herokuapp.com/api/excercisies`,
         type: 'GET',
         success: function(excercises) {
             $('#pid-excercise').empty();
@@ -196,7 +187,7 @@ function postExcercise(){
         };
         console.log(formData);
         $.ajax({
-            url: 'http://localhost:8080/api/excercisies',
+            url: 'https://swimmingtg.herokuapp.com/api/excercisies',
             type: 'POST', 
             data:formData,
             cache: false,
@@ -210,7 +201,7 @@ function postExcercise(){
         })
 }
 function getExcerciseByStep(step){
-    console.log(`http://localhost:8080/api/step/:${step}`);
+    console.log(`https://swimmingtg.herokuapp.com/api/step/:${step}`);
     let stepList = '';
     if(step == 'Race')          stepList = '#race-article';
     else if(step == 'Warm Up')  stepList = '#worm-article'; 
@@ -218,7 +209,7 @@ function getExcerciseByStep(step){
     else                        stepList = '#swimdown-article'; 
 
     $.ajax({
-        url: `http://localhost:8080/api/step/${step}`,
+        url: `https://swimmingtg.herokuapp.com/api/step/${step}`,
         type: 'GET',
         success: function(excercises) {
             $('#pid-excer-by-step').empty();
@@ -255,7 +246,6 @@ function getExcerciseByStep(step){
     });
 }
 
-
 //=========LISTS============
 let warmList = []; 
 let mainList = []; 
@@ -264,7 +254,6 @@ let raceList = [];
 let excerciseisList = [];
 let totalDistance = 0;
 localStorage.setItem("Distance", parseInt(0));
-
 
 //=========LIST============
 function pushList(list, id){
@@ -296,8 +285,6 @@ function removeList(str){
     }
 }
 
- 
-
 //=========EXCER=TO=LISTS============
 function chooseExcer(str){
     // I WILL SAVE HERE THE EXCERCISE TO SEND TO THE SERVER AS A TRAIN FORM PARAMETERS
@@ -308,7 +295,7 @@ function chooseExcer(str){
     if(listName == '#mainset-article')  pushList(mainList, excerId);
     if(listName == '#swimdown-article') pushList(downList, excerId);
     $.ajax({
-        url: `http://localhost:8080/api/excercisies/${excerId}`,
+        url: `https://swimmingtg.herokuapp.com/api/excercisies/${excerId}`,
         type: 'GET',
         success: function(excercise) {
             $(listName).append(
@@ -343,7 +330,7 @@ function chooseExcer(str){
 function getExcercise(listName, id){
     let str = `${id}, ${listName}`;
     $.ajax({
-        url: `http://localhost:8080/api/excercisies/${id}`,
+        url: `https://swimmingtg.herokuapp.com/api/excercisies/${id}`,
         type: 'GET',
         success: function(excercise) {
            $(listName).append(
@@ -352,23 +339,21 @@ function getExcercise(listName, id){
                 (excercise.excercise.tempo == 'Easy' ? '<label>Level</label> : <img src="https://img.icons8.com/ios-filled/30/26e07f/heart-with-pulse--v1.png"/><br>': '') +
                     (excercise.excercise.tempo == 'Medium' ? '<label>Level</label> : <img src="https://img.icons8.com/ios-filled/30/CCCC00/heart-with-pulse--v1.png"/><br>': '') +
                     (excercise.excercise.tempo == 'Hard' ? '<label>Level</label> : <img src="https://img.icons8.com/fluent/30/26e07f/heart-with-pulse.png"/><br>': '') +
-                     (excercise.excercise.break == 10 ? '<label>Break</label> : <img src="https://img.icons8.com/dotty/30/6495ED/forward-10.png"/><br>': '') +
-                     (excercise.excercise.break == 15 ? '<label>Break</label> : <img src="https://img.icons8.com/carbon-copy/36/6495ED/15-circled-c.png"/><br>': '') +
-                     (excercise.excercise.break == 20 ? '<label>Break</label> : <img src="https://img.icons8.com/carbon-copy/36/6495ED/20-circled-c.png"/><br>': '') +
-                     (excercise.excercise.break == 30 ? '<label>Break</label> : <img src="https://img.icons8.com/dotty/30/6495ED/forward-30.png"/><br>': '') +
-                     (excercise.excercise.break == 45 ? '<label>Break</label> : <img src="https://img.icons8.com/color/30/6495ED/45.png"/><br>': '') +
-                     (excercise.excercise.break == 60 ? '<label>Break</label> : <img src="https://img.icons8.com/ios/30/6495ED/last-60-sec.png"/><br>': '') +
+                     (excercise.excercise.break == 10 ? '<label>Break</label> : <img src="https://img.icons8.com/dotty/30/6495ED/forward-10.png"/>': '') +
+                     (excercise.excercise.break == 15 ? '<label>Break</label> : <img src="https://img.icons8.com/carbon-copy/36/6495ED/15-circled-c.png"/>': '') +
+                     (excercise.excercise.break == 20 ? '<label>Break</label> : <img src="https://img.icons8.com/carbon-copy/36/6495ED/20-circled-c.png"/>': '') +
+                     (excercise.excercise.break == 30 ? '<label>Break</label> : <img src="https://img.icons8.com/dotty/30/6495ED/forward-30.png"/>': '') +
+                     (excercise.excercise.break == 45 ? '<label>Break</label> : <img src="https://img.icons8.com/color/30/6495ED/45.png"/>': '') +
+                     (excercise.excercise.break == 60 ? '<label>Break</label> : <img src="https://img.icons8.com/ios/30/6495ED/last-60-sec.png"/>': '') +
                     '</aside>'+
                     '<aside class="midle-excer"><label>Mount</label> : <span>'+ excercise.excercise.count +' x '+ excercise.excercise.distance +'</span><br>' +
                     '<label>Style</label> : <span>'+ excercise.excercise.multiple +'</span><br>' + 
-                    '<label style="color: red;">Details</label> : <span>'+ excercise.excercise.details +'</span></aside><br>' +
+                    '<label>Details</label> : <span>'+ excercise.excercise.details +'</span></aside>' +
                     '<aside class="right-excer">' + 
-                    (excercise.excercise.isKickBoard == true ? '<img src="https://img.icons8.com/fluent/40/000000/buoyancy-compensator.png"/><br>': '') +
+                    (excercise.excercise.isKickBoard == true ? '<img src="https://img.icons8.com/fluent/40/000000/buoyancy-compensator.png"/>': '') +
                     (excercise.excercise.isFins == true ? '<img src="https://img.icons8.com/officel/40/000000/flippers.png"/><br>': '') +
-                    (excercise.excercise.isPullbuoy == true ? '<img src="https://img.icons8.com/ultraviolet/40/000000/float.png"/><br>': '') +
-                    (excercise.excercise.isHandPaddles == true ? '<img src="https://img.icons8.com/wired/40/4a90e2/hand.png"/><br>': '')+
-                    '<br>' +
-                    '<br>' +
+                    (excercise.excercise.isPullbuoy == true ? '<img src="https://img.icons8.com/ultraviolet/40/000000/float.png"/>': '') +
+                    (excercise.excercise.isHandPaddles == true ? '<img src="https://img.icons8.com/wired/40/4a90e2/hand.png"/>': '')+
                 '</aside><button class="plus btn btn-danger" onClick="removeList(\'' + str + '\')"><i class="bx bx-minus"></i>' + '</button>'
                 );
         },
@@ -404,7 +389,7 @@ function showFormExcercises(listName){
 async function distance(excerciseisList){
     await excerciseisList.forEach(element => {
         $.ajax({
-            url: `http://localhost:8080/api/excercisies/${element}`,
+            url: `https://swimmingtg.herokuapp.com/api/excercisies/${element}`,
             type: 'GET',
             success: function(excercise) {
                 let coun = excercise.excercise.count;
@@ -445,7 +430,7 @@ async function postTrain(){
             'totalDistance': parseInt(localStorage.getItem("Distance")),        
         };
     $.ajax({
-        url: 'http://localhost:8080/api/trains',
+        url: 'https://swimmingtg.herokuapp.com/api/trains',
         type: 'POST', 
         data:formData,
         cache: false,
@@ -467,29 +452,28 @@ async function postTrain(){
    
 }
 
-
 //=========Train=Show============
 function getTrain(){
     let id = localStorage.getItem('trainID');
     $.ajax({
-        url: `http://localhost:8080/api/trains/${id}`,
+        url: `https://swimmingtg.herokuapp.com/api/trains/${id}`,
         type: 'GET',
         success: function(train) {
            $('#Train').append(
-               '<img src="img/header-5.jpg" class="img-header">'+
+               '<img src="img/header-3.jpg" class="img-header">'+
                '<section class="train-header">'+
                '<h3>Train Name : '+ train.train.name +'</h3></section><section class="train-body">' +
                train.train.exercisies.forEach(excersice => {
                     getExcercise('.train-body', excersice);
                }) +
                '</section><section class="train-footer"><label>Date: </label><span>'+ (train.train.date).substr(0,10) +'</span>'+
-               '<br><label class="center-lebel">Distance: </label><span> '+ train.train.totalDistance +'m</span>'+
+               '<label class="center-lebel">Distance: </label><span> '+ train.train.totalDistance +'m</span>'+
                '<img src="img/logo.png" class="right-img"></section></div>'
            )     
         },
         error:function(){  
            alert('Error - getMovie');
-           top.location.href="404.html"
+           //top.location.href="404.html"
         }   
     });           
 };
@@ -499,7 +483,7 @@ function pushTrain(){
 
    const formData = { 'train' : trainID };
     $.ajax({
-        url: `http://localhost:8080/api/users/${userId}`,
+        url: `https://swimmingtg.herokuapp.com/api/users/${userId}`,
         type: 'PUT',
         data:formData,
         success: function(user) {
@@ -511,7 +495,6 @@ function pushTrain(){
         }   
     });       
 }
-
 
 //=========Profile===============
 async function getUser(){
@@ -527,9 +510,9 @@ async function getUser(){
         let image = localStorage.getItem("image");
         let urlImage = "";
         if(image == 'img/Unknown_person.jpg') urlImage = image;
-        else urlImage = 'http://localhost:8080/' + image;
+        else urlImage = 'https://swimmingtg.herokuapp.com/' + image;
         $.ajax({
-            url: `http://localhost:8080/api/users/${id}`,
+            url: `https://swimmingtg.herokuapp.com/api/users/${id}`,
             type: 'GET',
             success: function(user) {
                 $('#user-name-span').append((name).toUpperCase());
@@ -558,14 +541,14 @@ function getUserTrains(){
     let totalExcercise = 0;
     let lestDate = 01/01/90;
     $.ajax({
-        url: `http://localhost:8080/api/users/${id}`,
+        url: `https://swimmingtg.herokuapp.com/api/users/${id}`,
         type: 'GET',
         success: function(user) {
             $('#my-profile-list').empty();
              user.user.trainsHistory.forEach(trainId => {
                 console.log(trainId);
                 $.ajax({
-                    url: `http://localhost:8080/api/trains/${trainId}`,
+                    url: `https://swimmingtg.herokuapp.com/api/trains/${trainId}`,
                     type: 'GET',
                     success: function(train) {
                         $('#my-profile-list').append(
@@ -604,10 +587,7 @@ function getUserTrains(){
     });     
 }
 
-
-
 //=========Random===============
-
 function postRandom(){
     let equipments2 = document.getElementsByClassName('eqip');
     const formData = {
@@ -617,24 +597,180 @@ function postRandom(){
             'isHandPaddles':  equipments2[2].checked,
             'isKickBoard': equipments2[3].checked
         };
-        console.log(formData);
+        localStorage.setItem('distanceTrain',formData.distance )
         $.ajax({
-            url: 'http://localhost:8080/api/random',
+            url: 'https://swimmingtg.herokuapp.com/api/random',
             type: 'POST', 
             data:formData,
             cache: false,
             dataType : 'json',
-            success: function(msg, workout) {
-                console.log(`msg - ${msg}`);
-                console.log(workout);
+            success: function(data) {
+                showRandomTrain(data);
             },  
             error:function(message){  
                 $('.error-box').append(`<h2>errors</h2><p>`+message+`</p>`);
             }
         })
 }
+function showRandomTrain(data){
+    let excercises = data;
+    let results = [];
+    $('#train-show-random').empty();
+    $('#train-show-random').append(
+        '<img src="img/header-3.jpg" class="img-header">'+
+        '<section class="train-header"><h3>Train Name : Random Train</h3></section>'
+    )
+    excercises.forEach(excersice => {
+            results.push(excersice._id.toString());
+            $('#train-show-random').append(
+            '<article class="exer hvr-underline-from-center"><aside class="left-excer">'+
+            '<label class="head-excer">Step</label> : <span class="head-excer">'+ excersice.step +'</span><br>' +
+            (excersice.tempo == 'Easy' ? '<label>Level</label> : <img src="https://img.icons8.com/ios-filled/28/26e07f/heart-with-pulse--v1.png"/><br>': '') +
+                (excersice.tempo == 'Medium' ? '<label>Level</label> : <img src="https://img.icons8.com/ios-filled/28/CCCC00/heart-with-pulse--v1.png"/><br>': '') +
+                (excersice.tempo == 'Hard' ? '<label>Level</label> : <img src="https://img.icons8.com/fluent/28/26e07f/heart-with-pulse.png"/><br>': '') +
+                 (excersice.break == 10 ? '<label>Break</label> : <img src="https://img.icons8.com/dotty/38/6495ED/forward-10.png"/>': '') +
+                 (excersice.break == 15 ? '<label>Break</label> : <img src="https://img.icons8.com/carbon-copy/38/6495ED/15-circled-c.png"/>': '') +
+                 (excersice.break == 20 ? '<label>Break</label> : <img src="https://img.icons8.com/carbon-copy/38/6495ED/20-circled-c.png"/>': '') +
+                 (excersice.break == 30 ? '<label>Break</label> : <img src="https://img.icons8.com/dotty/38/6495ED/forward-30.png"/>': '') +
+                 (excersice.break == 45 ? '<label>Break</label> : <img src="https://img.icons8.com/color/38/6495ED/45.png"/>': '') +
+                 (excersice.break == 60 ? '<label>Break</label> : <img src="https://img.icons8.com/ios/28/6495ED/last-60-sec.png"/>': '') +
+                '</aside>'+
+                '<aside class="midle-excer"><label>Mount</label> : <span>'+ excersice.count +' x '+ excersice.distance +'</span><br>' +
+                '<label>Style</label> : <span>'+ excersice.multiple +'</span><br>' + 
+                '<label>Details</label> : <span>'+ excersice.details +'</span></aside>' +
+                '<aside class="right-excer">' + 
+                (excersice.isKickBoard == true ? '<img src="https://img.icons8.com/fluent/40/000000/buoyancy-compensator.png"/>': '') +
+                (excersice.isFins == true ? '<img src="https://img.icons8.com/officel/40/000000/flippers.png"/><br>': '') +
+                (excersice.isPullbuoy == true ? '<img src="https://img.icons8.com/ultraviolet/40/000000/float.png"/>': '') +
+                (excersice.isHandPaddles == true ? '<img src="https://img.icons8.com/wired/40/4a90e2/hand.png"/>': '')+
+                '</aside></article>'
+        )});
+           $('#train-show-random').append(            
+            '<section class="train-footer"><label class="center-lebel">Distance: </label><span> '+        localStorage.getItem('distanceTrain')+'m</span>'+               
+            '<img src="img/logo.png" class="right-img"></section><div class ="footer-form-random">'+
+            '<button class="btn btn-success" onClick="postRandomTrain(\'' + results + '\')">Save</button>'+
+            '<button class="btn btn-secondary" onClick="postRandomTrain(\'' + results + '\')">Rand Again</button></div></div>'
+    )
+}
+function postRandomTrain(data){   
+    let formData;
+    console.log(data);
+    alert(data)
+    let myTotalDistance = parseInt(localStorage.getItem("Distance"));
+    formData = {
+        'name' : 'Random Train',
+        'date': new Date(),
+        'exercisies': data,
+        'totalDistance': parseInt(localStorage.getItem('distanceTrain')),        
+    };
+    $.ajax({
+        url: 'https://swimmingtg.herokuapp.com/api/trains',
+        type: 'POST', 
+        data:formData,
+        cache: false,
+        dataType : 'json',
+        success: function(train) {
+            localStorage.setItem('trainID', train._id);
+            pushTrain();
+            top.location.href="trainshow.html";
+        },  
+        error:function(message){  
+            $('.error-box').append(`<h2>errors</h2><p>`+message+`</p>`);
+        }
+    })    
 
+}
 
+//=========WORD============
+function Export2Doc(element, filename = ''){
+    var preHtml = "<html xmlns:o='urn:schemas-microsoft-com:office:office' xmlns:w='urn:schemas-microsoft-com:office:word' xmlns='http://www.w3.org/TR/REC-html40'><head><meta charset='utf-8'><title>Export HTML To Doc</title></head><body>";
+    var postHtml = "</body></html>";
+    var html = preHtml+document.getElementById(element).innerHTML+postHtml;
+
+    var css = ('\
+    <style>\
+    @page WordSection1{size: 841.95pt 595.35pt;mso-page-orientation: portrait;}\
+    .exer{display: flex; width:70%; margin-top: 2%; margin-left: 15%; background-color: whitesmoke; border: 1px solid gray; color: red}\
+    </style>\
+    ');
+    var blob = new Blob(['\ufeff', css + html], {
+        type: 'application/msword'
+    });
+    var url = 'data:application/vnd.ms-word;charset=utf-8,' + encodeURIComponent(html);
+    filename = filename?filename+'.doc':'document.doc';
+    var downloadLink = document.createElement("a");
+    document.body.appendChild(downloadLink);
+    if(navigator.msSaveOrOpenBlob ){
+        navigator.msSaveOrOpenBlob(blob, filename);
+    }else{
+        downloadLink.href = url;
+        downloadLink.download = filename;
+        downloadLink.click();
+    }
+    document.body.removeChild(downloadLink);
+}
+function getDocTrain(){
+    let id = localStorage.getItem('trainID');
+    $.ajax({
+        url: `http://localhost:8080/api/trains/${id}`,
+        type: 'GET',
+        success: function(train) {
+           $('#Train').append(
+               '<img src="img/header-5.jpg" class="img-header">'+
+               '<section class="train-header">'+
+               '<h3>Train Name : '+ train.train.name +'</h3></section><section class="train-body">' +
+               train.train.exercisies.forEach(excersice => {
+                    getDocExcercise('.train-body', excersice);
+               }) +
+               '</section><section class="train-footer"><label>Date: </label><span>'+ (train.train.date).substr(0,10) +'</span>'+
+               '<br><label class="center-lebel">Distance: </label><span> '+ train.train.totalDistance +'m</span>'+
+               '<img src="img/logo.png" class="right-img"></section></div>'
+           )     
+        },
+        error:function(){  
+           alert('Error - getMovie');
+           top.location.href="404.html"
+        }   
+    });           
+};
+function getDocExcercise(listName, id){
+    let str = `${id}, ${listName}`;
+    $.ajax({
+        url: `http://localhost:8080/api/excercisies/${id}`,
+        type: 'GET',
+        success: function(excercise) {
+           $(listName).append(
+                '<article class="exer hvr-underline-from-center"><aside class="left-excer">'+
+                '<label class="head-excer">Step</label> : <span class="head-excer">'+ excercise.excercise.step +'</span><br>' +
+                (excercise.excercise.tempo == 'Easy' ? '<label>Level</label> : <img src="https://img.icons8.com/ios-filled/30/26e07f/heart-with-pulse--v1.png"/><br>': '') +
+                    (excercise.excercise.tempo == 'Medium' ? '<label>Level</label> : <img src="https://img.icons8.com/ios-filled/30/CCCC00/heart-with-pulse--v1.png"/><br>': '') +
+                    (excercise.excercise.tempo == 'Hard' ? '<label>Level</label> : <img src="https://img.icons8.com/fluent/30/26e07f/heart-with-pulse.png"/><br>': '') +
+                     (excercise.excercise.break == 10 ? '<label>Break</label> : <img src="https://img.icons8.com/dotty/30/6495ED/forward-10.png"/><br>': '') +
+                     (excercise.excercise.break == 15 ? '<label>Break</label> : <img src="https://img.icons8.com/carbon-copy/36/6495ED/15-circled-c.png"/><br>': '') +
+                     (excercise.excercise.break == 20 ? '<label>Break</label> : <img src="https://img.icons8.com/carbon-copy/36/6495ED/20-circled-c.png"/><br>': '') +
+                     (excercise.excercise.break == 30 ? '<label>Break</label> : <img src="https://img.icons8.com/dotty/30/6495ED/forward-30.png"/><br>': '') +
+                     (excercise.excercise.break == 45 ? '<label>Break</label> : <img src="https://img.icons8.com/color/30/6495ED/45.png"/><br>': '') +
+                     (excercise.excercise.break == 60 ? '<label>Break</label> : <img src="https://img.icons8.com/ios/30/6495ED/last-60-sec.png"/><br>': '') +
+                    '</aside>'+
+                    '<aside class="midle-excer"><label>Mount</label> : <span>'+ excercise.excercise.count +' x '+ excercise.excercise.distance +'</span><br>' +
+                    '<label>Style</label> : <span>'+ excercise.excercise.multiple +'</span><br>' + 
+                    '<label style="color: red;">Details</label> : <span>'+ excercise.excercise.details +'</span></aside><br>' +
+                    '<aside class="right-excer">' + 
+                    (excercise.excercise.isKickBoard == true ? '<img src="https://img.icons8.com/fluent/40/000000/buoyancy-compensator.png"/><br>': '') +
+                    (excercise.excercise.isFins == true ? '<img src="https://img.icons8.com/officel/40/000000/flippers.png"/><br>': '') +
+                    (excercise.excercise.isPullbuoy == true ? '<img src="https://img.icons8.com/ultraviolet/40/000000/float.png"/><br>': '') +
+                    (excercise.excercise.isHandPaddles == true ? '<img src="https://img.icons8.com/wired/40/4a90e2/hand.png"/><br>': '')+
+                    '<br>' +
+                    '<br>' +
+                '</aside><button class="plus btn btn-danger" onClick="removeList(\'' + str + '\')"><i class="bx bx-minus"></i>' + '</button>'
+                );
+        },
+        error:function(){  
+           alert('Error - getMovie');
+           top.location.href="404.html"
+        }   
+    });               
+}
 
 //=========LISTENER============
 $(document).on('click', '#login-button', function(e){
@@ -685,128 +821,25 @@ $(document).on('click', '#random-button', function(e){
     e.preventDefault();
     postRandom();
 });
-
-//=========WORD============
-function Export2Doc(element, filename = ''){
-    var preHtml = "<html xmlns:o='urn:schemas-microsoft-com:office:office' xmlns:w='urn:schemas-microsoft-com:office:word' xmlns='http://www.w3.org/TR/REC-html40'><head><meta charset='utf-8'><title>Export HTML To Doc</title></head><body>";
-    var postHtml = "</body></html>";
-    var html = preHtml+document.getElementById(element).innerHTML+postHtml;
-
-    var css = ('\
-    <style>\
-    @page WordSection1{size: 841.95pt 595.35pt;mso-page-orientation: portrait;}\
-    .exer{display: flex; width:70%; margin-top: 2%; margin-left: 15%; background-color: whitesmoke; border: 1px solid gray; color: red}\
-    </style>\
-    ');
-
-
-    var blob = new Blob(['\ufeff', css + html], {
-        type: 'application/msword'
-    });
-    
-    // Specify link url
-    var url = 'data:application/vnd.ms-word;charset=utf-8,' + encodeURIComponent(html);
-    
-    // Specify file name
-    filename = filename?filename+'.doc':'document.doc';
-    
-    // Create download link element
-    var downloadLink = document.createElement("a");
-
-    document.body.appendChild(downloadLink);
-    
-    if(navigator.msSaveOrOpenBlob ){
-        navigator.msSaveOrOpenBlob(blob, filename);
-    }else{
-        // Create a link to the file
-        downloadLink.href = url;
-        
-        // Setting the file name
-        downloadLink.download = filename;
-        
-        //triggering the function
-        downloadLink.click();
-    }
-    
-    document.body.removeChild(downloadLink);
-}
-
-function trainToWord(){
-    let id = localStorage.getItem('trainID');
-    $.ajax({
-        url: `http://localhost:8080/api/trains/${id}`,
-        type: 'GET',
-        success: function(train) {
-           $('#Train').append(
-               '<img src="img/header-5.jpg" class="img-header">'+
-               '<section class="train-header">'+
-               '<h3>Train Name : '+ train.train.name +'</h3></section><section class="train-body">' +
-               train.train.exercisies.forEach(excersice => {
-                    getExcercise('.train-body', excersice);
-               }) +
-               '</section><section class="train-footer"><label>Date: </label><span>'+ (train.train.date).substr(0,10) +'</span>'+
-               '<br><label class="center-lebel">Distance: </label><span> '+ train.train.totalDistance +'m</span>'+
-               '<img src="img/logo.png" class="right-img"></section></div>'
-           )     
-        },
-        error:function(){  
-           alert('Error - getMovie');
-           top.location.href="404.html"
-        }   
-    });           
-};
-
-function excerciseToWord(listName, id){
-    let str = `${id}, ${listName}`;
-    $.ajax({
-        url: `http://localhost:8080/api/excercisies/${id}`,
-        type: 'GET',
-        success: function(excercise) {
-           $(listName).append(
-                '<article class="exer hvr-underline-from-center" style="display: flex; width:70%; margin-top: 2%; margin-left: 15%; background-color: blue; border: 1px solid gray;" ><aside class="left-excer" style="">'+
-                '<label class="head-excer">Step</label> : <span class="head-excer">'+ excercise.excercise.step +'</span><br>' +
-                (excercise.excercise.tempo == 'Easy' ? '<label>Level</label> : <img src="https://img.icons8.com/ios-filled/30/26e07f/heart-with-pulse--v1.png"/><br>': '') +
-                    (excercise.excercise.tempo == 'Medium' ? '<label>Level</label> : <img src="https://img.icons8.com/ios-filled/30/CCCC00/heart-with-pulse--v1.png"/><br>': '') +
-                    (excercise.excercise.tempo == 'Hard' ? '<label>Level</label> : <img src="https://img.icons8.com/fluent/30/26e07f/heart-with-pulse.png"/><br>': '') +
-                     (excercise.excercise.break == 10 ? '<label>Break</label> : <img src="https://img.icons8.com/dotty/30/6495ED/forward-10.png"/><br>': '') +
-                     (excercise.excercise.break == 15 ? '<label>Break</label> : <img src="https://img.icons8.com/carbon-copy/36/6495ED/15-circled-c.png"/><br>': '') +
-                     (excercise.excercise.break == 20 ? '<label>Break</label> : <img src="https://img.icons8.com/carbon-copy/36/6495ED/20-circled-c.png"/><br>': '') +
-                     (excercise.excercise.break == 30 ? '<label>Break</label> : <img src="https://img.icons8.com/dotty/30/6495ED/forward-30.png"/><br>': '') +
-                     (excercise.excercise.break == 45 ? '<label>Break</label> : <img src="https://img.icons8.com/color/30/6495ED/45.png"/><br>': '') +
-                     (excercise.excercise.break == 60 ? '<label>Break</label> : <img src="https://img.icons8.com/ios/30/6495ED/last-60-sec.png"/><br>': '') +
-                    '</aside>'+
-                    '<aside class="midle-excer"><label>Mount</label> : <span>'+ excercise.excercise.count +' x '+ excercise.excercise.distance +'</span><br>' +
-                    '<label>Style</label> : <span>'+ excercise.excercise.multiple +'</span><br>' + 
-                    '<label>Details</label> : <span>'+ excercise.excercise.details +'</span></aside><br>' +
-                    '<aside class="right-excer">' + 
-                    (excercise.excercise.isKickBoard == true ? '<img src="https://img.icons8.com/fluent/40/000000/buoyancy-compensator.png"/><br>': '') +
-                    (excercise.excercise.isFins == true ? '<img src="https://img.icons8.com/officel/40/000000/flippers.png"/><br>': '') +
-                    (excercise.excercise.isPullbuoy == true ? '<img src="https://img.icons8.com/ultraviolet/40/000000/float.png"/><br>': '') +
-                    (excercise.excercise.isHandPaddles == true ? '<img src="https://img.icons8.com/wired/40/4a90e2/hand.png"/><br>': '')+
-                    '<br>' +
-                    '<br>' +
-                '</aside><button class="plus btn btn-danger" onClick="removeList(\'' + str + '\')"><i class="bx bx-minus"></i>' + '</button>'
-                );
-        },
-        error:function(){  
-           alert('Error - getMovie');
-           top.location.href="404.html"
-        }   
-    });               
-}
-
-$(function() { 
-    $("#exportButton").click(function() { 
-        html2canvas($("#Train"), {
-            onrendered: function(canvas) {
-                theCanvas = canvas;
-
-                console.log(canvas);
-
-                canvas.toBlob(function(blob) {
-                    saveAs(blob, "Dashboard.png"); 
-                });
-            }
-        });
-    });
+$(document).on('click', '#htmlToCanvas', function(e){
+    e.preventDefault();
+    let div = document.getElementById('Train'); 
+    html2canvas(div).then(  function (canvas) { 
+        Canvas2Image.saveAsJPEG(canvas)
+    });    
 });
+$(document).on('click', '#htmlToWord', function(e){
+    e.preventDefault();
+    let div = document.getElementById('Train'); 
+    Export2Doc(div, 'SwimmingDoc');  
+});
+$(document).on('click', '#random-button-save', function(e){
+    e.preventDefault();
+    console.log('random-button-save');
+});
+$(document).on('click', '#random-button-rand', function(e){
+    e.preventDefault();
+    console.log('random-button-rand');
+});    
+
+    
